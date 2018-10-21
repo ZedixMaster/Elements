@@ -17,6 +17,8 @@ public class BoardManager : MonoBehaviour {
 
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
         CreateBoard(offset.x, offset.y);
+
+        FloatingTextController.Initialize();
     }
 
 	private void CreateBoard (float xOffset, float yOffset) {
