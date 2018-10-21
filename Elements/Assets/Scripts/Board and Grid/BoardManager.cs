@@ -7,8 +7,12 @@ public class BoardManager : MonoBehaviour {
 	public List<Sprite> characters = new List<Sprite>();
 	public GameObject tile;
 	public int xSize, ySize;
+    public int combo = 0;
 
-	private GameObject[,] tiles;
+    private int maxScore = 1000;
+    private int maxMoves = 10;
+
+    private GameObject[,] tiles;
 
 	public bool IsShifting { get; set; }
 
@@ -93,13 +97,21 @@ public class BoardManager : MonoBehaviour {
 
         for (int i = 0; i < nullCount; i++)
         {
-            GUIManager.instance.Score += 50;
+            GUIManager.instance.Score += (50 * combo);
             yield return new WaitForSeconds(shiftDelay);
             for (int k = 0; k < renders.Count - 1; k++)
             {
                 renders[k].sprite = renders[k + 1].sprite;
                 renders[k + 1].sprite = GetNewSprite(x, ySize - 1);
             }
+        }
+
+        if(GUIManager.instance.Score >= maxScore)
+        {
+            GUIManager.instance.Level++;
+            maxScore = (GUIManager.instance.Level * maxScore);
+            maxMoves = (10 * (GUIManager.instance.Level));
+            GUIManager.instance.MoveCounter = maxMoves;
         }
 
         IsShifting = false;

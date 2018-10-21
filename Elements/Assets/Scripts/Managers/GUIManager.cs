@@ -11,8 +11,10 @@ public class GUIManager : MonoBehaviour {
 
 	public Text scoreTxt;
 	public Text moveCounterTxt;
+    public Text levelTxt;
 
 	private int score;
+    private int level = 1;
 
     private int moveCounter;
 
@@ -27,6 +29,20 @@ public class GUIManager : MonoBehaviour {
         {
             score = value;
             scoreTxt.text = score.ToString();
+        }
+    }
+
+    public int Level
+    {
+        get
+        {
+            return level;
+        }
+
+        set
+        {
+            level = value;
+            levelTxt.text = level.ToString();
         }
     }
 

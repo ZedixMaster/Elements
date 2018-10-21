@@ -71,7 +71,8 @@ public class Tile : MonoBehaviour {
         {
             return;
         }
-
+        
+        BoardManager.instance.combo = 0;
         Sprite tempSprite = render2.sprite;
         render2.sprite = render.sprite;
         render.sprite = tempSprite;
@@ -120,8 +121,10 @@ public class Tile : MonoBehaviour {
         }
         if(matchingTiles.Count >= 2)
         {
+            BoardManager.instance.combo += 1;
             for (int i = 0; i < matchingTiles.Count; i++)
             {
+                FloatingTextController.CreateFloatingText((50 * BoardManager.instance.combo).ToString(), matchingTiles[i].transform);
                 matchingTiles[i].GetComponent<SpriteRenderer>().sprite = null;
             }
             matchFound = true;
@@ -139,13 +142,10 @@ public class Tile : MonoBehaviour {
         {
             render.sprite = null;
             matchFound = false;
-            Debug.Log("Gain 50");
-            FloatingTextController.CreateFloatingText(50.ToString(), transform);
+            FloatingTextController.CreateFloatingText((50 * BoardManager.instance.combo).ToString(), transform);
             StopCoroutine(BoardManager.instance.FindNullTiles());
             StartCoroutine(BoardManager.instance.FindNullTiles());
             SFXManager.instance.PlaySFX(Clip.Clear);
         }
-
-        
     }
 }
